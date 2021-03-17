@@ -1,15 +1,13 @@
 var express = require('express');
 var router = express.Router();
-const userController = require("../controllers");
-const authMiddleware = require('../middlewares/auth')
 const auth = require('./auth')
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('../swagger.json');
 
 router.use('/auth', auth)
 
 /* GET home page. */
-router.use('/', authMiddleware)
-router.get('/', userController.basicAPI);
-router.post('/', userController.postAPI);
+router.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 module.exports = router;

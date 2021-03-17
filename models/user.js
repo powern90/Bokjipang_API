@@ -1,7 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define(
         'user',
-
         {
             phone: {
                 type: DataTypes.STRING(11),

@@ -1,0 +1,412 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Bokjipang API",
+    "description": "복지팡을 위한 API 테스트 페이지",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://api.bluemango.me/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Authentication"
+    }
+  ],
+  "paths": {
+    "/auth/checkphone": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Check phone number exist",
+        "operationId": "checkPhone",
+        "requestBody": {
+          "description": "Phone number",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Check_phone"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Check_phone_return_false"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Duplicate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Check_phone_return_true"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/auth/enroll": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Register new user",
+        "operationId": "enroll",
+        "requestBody": {
+          "description": "User form data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Enroll_user_data"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Enroll_return_true"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Fail to enroll",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Enroll_return_false"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Login",
+        "operationId": "login",
+        "requestBody": {
+          "description": "Login to user account",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Login_return_success"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid phone number or password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Login_return_failed"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "body"
+      }
+    },
+    "/auth/check": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Check token or get user data",
+        "operationId": "check",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDIyMjIzMzMzIiwibmFtZSI6InRlc3QyIiwiaW50ZXJlc3QiOnsi6rOg66C57J6QIjp0cnVlLCLtnozrtoDrqqgiOmZhbHNlfSwiaWF0IjoxNjE1OTg2NTU1LCJleHAiOjE2MTY1OTEzNTUsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.tPMDQ7lheH--KqBH4UmIuOTk1OmF9tHm5HC5gu-Zs5Y"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success to login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Check_return_success"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid phone number or password",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Check_return_failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Check_phone": {
+        "title": "Check phone",
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "01012345678"
+          }
+        },
+        "description": "User's phone number that want to check if there any duplicant"
+      },
+      "Check_phone_return_true": {
+        "title": "Check phone return true",
+        "type": "object",
+        "properties": {
+          "exist": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "description": "Result if there are duplicant"
+      },
+      "Check_phone_return_false": {
+        "title": "Check phone return false",
+        "type": "object",
+        "properties": {
+          "exist": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "description": "Result if there are no duplicant"
+      },
+      "Enroll_user_data": {
+        "title": "Enroll user data",
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "01012345678"
+          },
+          "password": {
+            "type": "string",
+            "example": "asdf"
+          },
+          "name": {
+            "type": "string",
+            "example": "서강준"
+          },
+          "gender": {
+            "type": "integer",
+            "format": "int32",
+            "example": 2
+          },
+          "age": {
+            "type": "integer",
+            "format": "int32",
+            "example": 25
+          },
+          "address": {
+            "type": "string",
+            "example": "서울특별시 노원구 월계동 광운로 7길 14-4 B03"
+          },
+          "interest": {
+            "$ref": "#/components/schemas/Interest"
+          }
+        },
+        "description": "New user's data who want to register"
+      },
+      "Interest": {
+        "title": "Interest",
+        "type": "object",
+        "properties": {
+          "고령자": {
+            "type": "boolean"
+          },
+          "한부모": {
+            "type": "boolean"
+          }
+        },
+        "description": "Interest that selected by user"
+      },
+      "Enroll_return_true": {
+        "title": "Enroll return true",
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          }
+        },
+        "description": "Result if enrollment was success"
+      },
+      "Enroll_return_false": {
+        "title": "Enroll return false",
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "description": "Result if enrollment was failed"
+      },
+      "Login": {
+        "title": "Login",
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "01012345678"
+          },
+          "password": {
+            "type": "string",
+            "example": "asdf"
+          }
+        },
+        "description": "User's phone number and password to login"
+      },
+      "Login_return_success": {
+        "title": "Login return success",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "logged in successfully"
+          },
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDIyMjIzMzMzIiwibmFtZSI6InRlc3QyIiwiaW50ZXJlc3QiOnsi6rOg66C57J6QIjp0cnVlLCLtnozrtoDrqqgiOmZhbHNlfSwiaWF0IjoxNjE1OTg2NTU1LCJleHAiOjE2MTY1OTEzNTUsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.tPMDQ7lheH--KqBH4UmIuOTk1OmF9tHm5HC5gu-Zs5Y"
+          }
+        },
+        "description": "Return data when login process was success"
+      },
+      "Login_return_failed": {
+        "title": "Login return failed",
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "login failed"
+          },
+          "success": {
+            "type": "boolean",
+            "example": false
+          }
+        },
+        "description": "Return data when login process was failed"
+      },
+      "Check_return_success": {
+        "title": "Check return success",
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "info": {
+            "$ref": "#/components/schemas/User_data_info"
+          }
+        }
+      },
+      "Check_return_failed": {
+        "title": "Check return failed",
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          },
+          "message": {
+            "type": "string",
+            "example": "not logged in"
+          }
+        }
+      },
+      "User_data_info": {
+        "title": "User data info",
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "example": "01012345678"
+          },
+          "name": {
+            "type": "string",
+            "example": "서강준"
+          },
+          "interest": {
+            "$ref": "#/components/schemas/Interest"
+          },
+          "iat": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1615966303
+          },
+          "exp": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1616571103
+          },
+          "iss": {
+            "type": "string",
+            "example": "bluemango.me"
+          },
+          "sub": {
+            "type": "string",
+            "example": "userInfo"
+          }
+        }
+      }
+    }
+  }
+}

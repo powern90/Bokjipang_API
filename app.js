@@ -5,7 +5,6 @@ var logger = require('morgan');
 
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var sequelize = require('./models').sequelize; // sequelize require
 const config = require('./config')
 
@@ -21,6 +20,5 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set('jwt-secret', config.secret)
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 
 module.exports = app;
