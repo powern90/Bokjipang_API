@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://api.bluemango.me/"
+      "url": "https://api.bluemango.me/"
     }
   ],
   "tags": [
