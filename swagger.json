@@ -46,7 +46,7 @@
               }
             }
           },
-          "405": {
+          "403": {
             "description": "Duplicate",
             "content": {
               "application/json": {
@@ -89,7 +89,7 @@
               }
             }
           },
-          "405": {
+          "403": {
             "description": "Fail to enroll",
             "content": {
               "application/json": {
@@ -132,7 +132,7 @@
               }
             }
           },
-          "405": {
+          "403": {
             "description": "Invalid phone number or password",
             "content": {
               "application/json": {
@@ -176,7 +176,7 @@
               }
             }
           },
-          "405": {
+          "403": {
             "description": "Invalid phone number or password",
             "content": {
               "application/json": {
