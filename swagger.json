@@ -14,6 +14,10 @@
     {
       "name": "auth",
       "description": "Authentication"
+    },
+    {
+      "name": "main",
+      "description": "Main page"
     }
   ],
   "paths": {
@@ -162,7 +166,7 @@
             "schema": {
               "type": "string"
             },
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDIyMjIzMzMzIiwibmFtZSI6InRlc3QyIiwiaW50ZXJlc3QiOnsi6rOg66C57J6QIjp0cnVlLCLtnozrtoDrqqgiOmZhbHNlfSwiaWF0IjoxNjE1OTg2NTU1LCJleHAiOjE2MTY1OTEzNTUsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.tPMDQ7lheH--KqBH4UmIuOTk1OmF9tHm5HC5gu-Zs5Y"
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
           }
         ],
         "responses": {
@@ -182,6 +186,40 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Check_return_failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/main": {
+      "get": {
+        "tags": [
+          "main"
+        ],
+        "summary": "Get main page data",
+        "operationId": "main",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success to get data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/main"
                 }
               }
             }
@@ -325,7 +363,7 @@
           },
           "token": {
             "type": "string",
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDIyMjIzMzMzIiwibmFtZSI6InRlc3QyIiwiaW50ZXJlc3QiOnsi6rOg66C57J6QIjp0cnVlLCLtnozrtoDrqqgiOmZhbHNlfSwiaWF0IjoxNjE1OTg2NTU1LCJleHAiOjE2MTY1OTEzNTUsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.tPMDQ7lheH--KqBH4UmIuOTk1OmF9tHm5HC5gu-Zs5Y"
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
           }
         },
         "description": "Return data when login process was success"
@@ -404,6 +442,110 @@
           "sub": {
             "type": "string",
             "example": "userInfo"
+          }
+        }
+      },
+      "Zzim_list": {
+        "title": "Zzim List",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "저소득층 지원사업"
+          },
+          "content": {
+            "type": "string",
+            "example": "돈줍니다"
+          }
+        }
+      },
+      "Board_list": {
+        "title": "Board List",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "포스트입니다"
+          }
+        }
+      },
+      "Highest_post": {
+        "title": "Highest Post",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "포스트입니다"
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다"
+          },
+          "category": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "like": {
+            "type": "integer",
+            "format": "int32",
+            "example": 10
+          }
+        }
+      },
+      "main": {
+        "title": "Main Data",
+        "type": "object",
+        "properties": {
+          "board": {
+            "type": "object",
+            "properties": {
+              "0": {
+                "$ref": "#/components/schemas/Board_list"
+              },
+              "1": {
+                "$ref": "#/components/schemas/Board_list"
+              },
+              "2": {
+                "$ref": "#/components/schemas/Board_list"
+              },
+              "3": {
+                "$ref": "#/components/schemas/Board_list"
+              },
+              "4": {
+                "$ref": "#/components/schemas/Board_list"
+              },
+              "5": {
+                "$ref": "#/components/schemas/Board_list"
+              }
+            }
+          },
+          "zzim": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Zzim_list"
+            }
+          },
+          "high": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Highest_post"
+            }
           }
         }
       }

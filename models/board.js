@@ -1,36 +1,33 @@
 const Sequelize = require('sequelize');
 module.exports = (sequelize) => {
     return sequelize.define(
-        'user',
+        'board',
         {
-            phone: {
-                type: Sequelize.STRING(11),
-                allowNull: false,
-                unique: true,
-            },
-            password: {
-                type: Sequelize.STRING(50),
+            title: {
+                type: Sequelize.TEXT,
                 allowNull: false,
             },
-            name: {
+            content: {
+                type: Sequelize.TEXT,
+                allowNull: false,
+            },
+            category: {
                 type: Sequelize.STRING(5),
                 allowNull: false,
             },
-            gender: {
+            uid: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            age: {
+            like: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
+                defaultValue: 0
             },
-            address: {
-                type: Sequelize.TEXT,
+            hit: {
+                type: Sequelize.INTEGER,
                 allowNull: false,
-            },
-            interest: {
-                type: Sequelize.TEXT,
-                allowNull: false,
+                defaultValue: 0
             }
         },
         {

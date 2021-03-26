@@ -1,15 +1,21 @@
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
 
-var indexRouter = require('./routes/index');
-var sequelize = require('./models').sequelize; // sequelize require
+const indexRouter = require('./routes/index');
+const sequelize = require('./models').sequelize; // sequelize require
 const config = require('./config')
 
-var app = express();
-sequelize.sync();
+const app = express();
+sequelize.sync({ alter : true })
+    .then(() => {
+        console.log("DB Connection Success");
+    })
+    .catch((err) => {
+        console.log("DB Connection Failed: "+ err);
+    });
 
 app.use(logger('dev'));
 app.use(express.json());
