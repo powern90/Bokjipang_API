@@ -18,6 +18,10 @@
     {
       "name": "main",
       "description": "Main page"
+    },
+    {
+      "name": "board",
+      "description": "Board page"
     }
   ],
   "paths": {
@@ -193,7 +197,6 @@
         }
       }
     },
-
     "/main": {
       "get": {
         "tags": [
@@ -220,6 +223,61 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/main"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board": {
+      "get": {
+        "tags": [
+          "board"
+        ],
+        "summary": "Get main page data",
+        "operationId": "main",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          },
+          {
+            "name": "board",
+            "in": "query",
+            "description": "Board number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 0
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Board page",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success to get data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/posts"
                 }
               }
             }
@@ -547,6 +605,51 @@
               "$ref": "#/components/schemas/Highest_post"
             }
           }
+        }
+      },
+      "post": {
+        "title": "Post",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "포스트입니다"
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다"
+          },
+          "category": {
+            "type": "string",
+            "example": "장애인"
+          },
+          "like": {
+            "type": "integer",
+            "format": "int32",
+            "example": 10
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-03-27T07:54:53.000Z"
+          },
+          "reply_count": {
+            "type": "integer",
+            "format": "int32",
+            "example": 3
+          }
+        }
+      },
+      "posts": {
+        "title": "Posts",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/post"
         }
       }
     }

@@ -78,7 +78,7 @@ exports.loginAPI = (req, res) => {
         if (user === null) {
             throw new Error('login failed')
         } else {
-            const p = new Promise((resolve, reject) => {
+            return new Promise((resolve, reject) => {
                 jwt.sign(
                     {
                         phone: user.phone,
@@ -95,12 +95,11 @@ exports.loginAPI = (req, res) => {
                         resolve(token)
                     })
             })
-            return p
         }
     }
 
     const respond = (token) => {
-        res.json({
+        res.status(200).json({
             message: 'logged in successfully',
             success: true,
             token

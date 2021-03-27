@@ -9,7 +9,7 @@ const sequelize = require('./models').sequelize; // sequelize require
 const config = require('./config')
 
 const app = express();
-sequelize.sync({ alter : true })
+sequelize.sync()
     .then(() => {
         console.log("DB Connection Success");
     })
