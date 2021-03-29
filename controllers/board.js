@@ -50,11 +50,11 @@ exports.getPostAPI = async (req, res) => {
 
     const getDoubleReply = (replies) => {
         const db_search = (reply) => {
-            return new Promise(resolve1 => {
+            return new Promise(resolve => {
                 replyDB.getReply(reply.id, true)
                     .then(double_replies => {
                         reply.dataValues['double_reply'] = double_replies;
-                        resolve1(double_replies);
+                        resolve(double_replies);
                     });
             })
         }
@@ -68,5 +68,61 @@ exports.getPostAPI = async (req, res) => {
     res.status(200).json({
         post: await getPost(req.query.post),
         reply: await getReply(req.query.post)
+    })
+}
+
+exports.updateReplyAPI = (req, res) => {
+    replyDB.updateReply(req.body.id, req.body.content, req.decoded.uid)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        }).catch((err) => {
+        res.status(404).json({
+            success: false,
+            err
+        })
+    })
+}
+
+exports.addReplyAPI = (req, res) => {
+    replyDB.addReply(req.body.content, req.body.post_id, req.decoded.uid, req.body.mid)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        }).catch((err) => {
+        res.status(404).json({
+            success: false,
+            err
+        })
+    })
+}
+
+exports.updatePostAPI = (req, res) => {
+    boardDB.updatePost(req.body.id, req.body.title, req.body.content, req.decoded.uid)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        }).catch((err) => {
+        res.status(404).json({
+            success: false,
+            err
+        })
+    })
+}
+
+exports.addPostAPI = (req, res) => {
+    replyDB.addReply(req.body.content, req.body.post_id, req.decoded.uid, req.body.mid)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        }).catch((err) => {
+        res.status(404).json({
+            success: false,
+            err
+        })
     })
 }

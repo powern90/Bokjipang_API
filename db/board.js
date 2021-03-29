@@ -70,3 +70,57 @@ exports.getPost = async (id) => {
             .catch(err => resolve(err))
     });
 }
+
+exports.updatePost = (post_id, title, content, uid) => {
+    return new Promise((resolve, reject) => {
+        models.Board.findOne({
+            attributes: ['uid'],
+            where: {
+                id: post_id
+            }
+        })
+            .then(data => {
+                if (data.uid === uid) {
+                    models.Board.update({
+                        title: title,
+                        content: content,
+                        returning: true,
+                    }, {
+                        where: {
+                            id: post_id
+                        },
+                    })
+                        .then(data => resolve(data))
+                        .catch(err => reject(err));
+                }
+                else {
+                    reject("not my post")
+                }
+            })
+    })
+}
+
+exports.addPost = (content, post_id, uid, m_id) => {
+    return new Promise((resolve, reject) => {
+        models.Reply.create({
+            content: content,
+            post_id: post_id,
+            uid: uid,
+            m_id: m_id,
+            returning: true,
+        })
+            .then(data => {
+                models.Reply.update({
+                    m_id: data.id,
+                    returning: true,
+                }, {
+                    where: {
+                        id: data.id
+                    },
+                })
+                    .then(data => resolve(data))
+                    .catch(err => reject(err));
+            })
+            .catch(err => reject(err));
+    })
+}
