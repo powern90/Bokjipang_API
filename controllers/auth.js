@@ -83,6 +83,7 @@ exports.loginAPI = (req, res) => {
                     {
                         phone: user.phone,
                         name: user.name,
+                        uid: user.id,
                         interest: JSON.parse(user.interest)
                     },
                     secret,
