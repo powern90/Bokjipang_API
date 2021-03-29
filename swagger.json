@@ -284,6 +284,50 @@
           }
         }
       }
+    },
+    "/board/post": {
+      "get": {
+        "tags": [
+          "board"
+        ],
+        "summary": "Get post",
+        "operationId": "board",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          },
+          {
+            "name": "post",
+            "in": "query",
+            "description": "Post number",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success to get data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/inner_post"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -650,6 +694,104 @@
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/post"
+        }
+      },
+      "reply": {
+        "title": "Reply",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다"
+          },
+          "uid": {
+            "type": "string",
+            "example": "이름"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-03-27T07:54:53.000Z"
+          },
+          "double_reply": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/double_reply"
+            }
+          }
+        }
+      },
+      "double_reply": {
+        "title": "Double reply",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다"
+          },
+          "uid": {
+            "type": "string",
+            "example": "이름"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2021-03-27T07:54:53.000Z"
+          }
+        }
+      },
+      "inner_post": {
+        "title": "Post",
+        "type": "object",
+        "properties": {
+          "post": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32",
+                "example": 1
+              },
+              "title": {
+                "type": "string",
+                "example": "포스트입니다"
+              },
+              "content": {
+                "type": "string",
+                "example": "내용입니다"
+              },
+              "category": {
+                "type": "string",
+                "example": "장애인"
+              },
+              "like": {
+                "type": "integer",
+                "format": "int32",
+                "example": 10
+              },
+              "createdAt": {
+                "type": "string",
+                "format": "date-time",
+                "example": "2021-03-27T07:54:53.000Z"
+              }
+            }
+          },
+          "reply": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/reply"
+            }
+          }
         }
       }
     }

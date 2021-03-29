@@ -55,3 +55,18 @@ exports.getList = async (board, start, end) => {
             .catch(err => resolve(err))
     });
 }
+
+exports.getPost = async (id) => {
+    return new Promise(resolve => {
+        models.Board.findOne({
+            attributes: ['id', 'title', 'content', 'category', 'like', 'createdAt'],
+            where: {
+                id: id
+            }
+        })
+            .then(data => {
+                resolve(data);
+            })
+            .catch(err => resolve(err))
+    });
+}

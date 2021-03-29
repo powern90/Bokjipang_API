@@ -6,6 +6,6 @@ const authMiddleware = require('../middlewares/auth');
 router.use('/', authMiddleware);
 
 router.get('/', boardController.getBoardAPI);
+router.get('/post', boardController.getPostAPI);
 
 module.exports = router;
-//

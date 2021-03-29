@@ -31,3 +31,42 @@ exports.getBoardAPI = (req, res) => {
         .then(getCounts)
         .then(respond)
 }
+
+exports.getPostAPI = async (req, res) => {
+    const getPost = (post_id) => {
+        return new Promise(resolve => {
+            boardDB.getPost(post_id)
+                .then(post => resolve(post));
+        })
+    }
+
+    const getReply = (post_id) => {
+        return new Promise(resolve => {
+            replyDB.getReply(post_id, false)
+                .then(getDoubleReply)
+                .then(replies => resolve(replies));
+                });
+    }
+
+    const getDoubleReply = (replies) => {
+        const db_search = (reply) => {
+            return new Promise(resolve1 => {
+                replyDB.getReply(reply.id, true)
+                    .then(double_replies => {
+                        reply.dataValues['double_reply'] = double_replies;
+                        resolve1(double_replies);
+                    });
+            })
+        }
+        return new Promise(async resolve => {
+            const promises = replies.map((reply) => db_search(reply));
+            await Promise.all(promises);
+            resolve(replies);
+        })
+    }
+
+    res.status(200).json({
+        post: await getPost(req.query.post),
+        reply: await getReply(req.query.post)
+    })
+}
