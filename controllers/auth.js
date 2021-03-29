@@ -34,7 +34,7 @@ exports.phone_duplicateAPI = (req, res) => {
                     }
                 )
             } else {
-                res.status(403).json(
+                res.status(200).json(
                     {
                         "exist": true
                     }
