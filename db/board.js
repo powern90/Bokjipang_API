@@ -3,8 +3,24 @@ const models = require("../models");
 const category = require("../category");
 const {Op} = require("sequelize");
 
+const checkUID = (post_id, uid) => {
+    return new Promise((resolve, reject) => {
+        models.Board.findOne({
+            attributes: ['uid'],
+            where: {
+                id: post_id
+            }
+        })
+            .then(fond_uid => {
+                if(fond_uid.uid === uid) resolve(true);
+                else resolve(false);
+            })
+            .catch(reject);
+    })
+}
+
 exports.getBoardLatest = (board_name) => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         models.Board.findAll({
             attributes: ['id', 'title'],
             limit: 1,
@@ -14,12 +30,12 @@ exports.getBoardLatest = (board_name) => {
             order: [[ 'createdAt', 'DESC' ]]
         })
             .then(data => resolve(data[0]))
-            .catch(err => resolve(err))
+            .catch(reject)
     });
 }
 
 exports.getTopHit = () => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         models.Board.findAll({
             attributes: ['id', 'title', 'content', 'category', 'like'],
             limit: 3,
@@ -30,13 +46,13 @@ exports.getTopHit = () => {
             },
             order: [[ 'hit', 'DESC' ]]
         })
-            .then(data => resolve(data))
-            .catch(err => resolve(err))
+            .then(resolve)
+            .catch(reject)
     });
 }
 
 exports.getList = async (board, start, end) => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         models.Board.findAll({
             attributes: ['id', 'title', 'content', 'category', 'like', 'createdAt'],
             limit: 10,
@@ -49,78 +65,110 @@ exports.getList = async (board, start, end) => {
             },
             order: [[ 'cid', 'ASC' ]]
         })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(err => resolve(err))
+            .then(resolve)
+            .catch(reject)
     });
 }
 
 exports.getPost = async (id) => {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         models.Board.findOne({
             attributes: ['id', 'title', 'content', 'category', 'like', 'createdAt'],
             where: {
                 id: id
             }
         })
-            .then(data => {
-                resolve(data);
-            })
-            .catch(err => resolve(err))
+            .then(resolve)
+            .catch(reject)
     });
 }
 
-exports.updatePost = (post_id, title, content, uid) => {
-    return new Promise((resolve, reject) => {
-        models.Board.findOne({
-            attributes: ['uid'],
-            where: {
-                id: post_id
-            }
-        })
-            .then(data => {
-                if (data.uid === uid) {
-                    models.Board.update({
-                        title: title,
-                        content: content,
-                        returning: true,
-                    }, {
-                        where: {
-                            id: post_id
-                        },
-                    })
-                        .then(data => resolve(data))
-                        .catch(err => reject(err));
-                }
-                else {
-                    reject("not my post")
-                }
-            })
-    })
-}
-
-exports.addPost = (content, post_id, uid, m_id) => {
-    return new Promise((resolve, reject) => {
-        models.Reply.create({
-            content: content,
-            post_id: post_id,
-            uid: uid,
-            m_id: m_id,
-            returning: true,
-        })
-            .then(data => {
-                models.Reply.update({
-                    m_id: data.id,
+exports.updatePost = (data, uid) => {
+    const update = (data, valid) => {
+        return new Promise((resolve, reject) => {
+            if(valid) {
+                models.Board.update({
+                    title: data.title,
+                    content: data.content,
                     returning: true,
                 }, {
                     where: {
                         id: data.id
                     },
                 })
-                    .then(data => resolve(data))
-                    .catch(err => reject(err));
+                    .then(resolve)
+                    .catch(reject);
+            }
+            else reject(new Error("Not My Post"));
+        });
+    }
+
+    return new Promise((resolve, reject) => {
+        checkUID(data.id, uid)
+            .then(valid => update(data, valid))
+            .then(resolve)
+            .catch(reject);
+    })
+}
+
+exports.addPost = (data, uid) => {
+    const getCID = (category) => {
+        return new Promise((resolve, reject) => {
+            models.Board.findOne({
+                attributes: ['cid'],
+                where: {
+                    category: category
+                },
+                order: [[ 'cid', 'DESC' ]]
             })
-            .catch(err => reject(err));
+                .then(data => resolve(data.cid + 1))
+                .catch(reject)
+        })
+    }
+
+    const createPost = (data, cid, uid) => {
+        return new Promise((resolve, reject) => {
+            models.Board.create({
+                title: data.title,
+                content: data.content,
+                category: data.category,
+                cid: cid,
+                uid: uid,
+                returning: true
+            })
+                .then(resolve)
+                .catch(reject)
+        })
+    }
+
+    return new Promise((resolve, reject) => {
+        getCID(data.category)
+            .then(cid => createPost(data, cid, uid))
+            .then(resolve)
+            .catch(reject)
+    })
+}
+
+exports.deletePost = (data, uid) => {
+    const deletePost = (data, valid) => {
+        return new Promise((resolve, reject) => {
+            if(valid) {
+                models.Board.destroy({
+                    where: {
+                        id: data.id
+                    }
+                })
+                    .then(resolve)
+                    .catch(reject);
+            }
+            else reject(new Error("Not My Post"));
+        });
+    }
+
+    return new Promise((resolve, reject) => {
+        checkUID(data.id, uid)
+            .then(valid => deletePost(data, valid))
+            .then(resolve)
+            .catch(reject);
     })
 }

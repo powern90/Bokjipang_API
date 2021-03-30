@@ -328,6 +328,330 @@
           }
         }
       }
+    },
+    "/board/post/add": {
+      "post": {
+        "tags": [
+          "board"
+        ],
+        "summary": "Add new Post",
+        "operationId": "board",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "requestBody": {
+          "description": "Post data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/board_add"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to add",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Failed to add",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board/post/update": {
+      "post": {
+        "tags": [
+          "board"
+        ],
+        "summary": "Update Post",
+        "operationId": "board",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "requestBody": {
+          "description": "Post data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/board_update"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Failed to update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board/post/delete": {
+      "post": {
+        "tags": [
+          "board"
+        ],
+        "summary": "Delete Post",
+        "operationId": "board",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "requestBody": {
+          "description": "Post data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/board_delete"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to delete",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Failed to delete",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board/reply/add": {
+      "post": {
+        "tags": [
+          "board"
+        ],
+        "summary": "Add new Reply",
+        "operationId": "board",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "requestBody": {
+          "description": "Post data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/reply_add"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to add",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Failed to add",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board/reply/update": {
+      "post": {
+        "tags": [
+          "board"
+        ],
+        "summary": "Update Reply",
+        "operationId": "board",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "requestBody": {
+          "description": "Post data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/reply_update"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Failed to update",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/board/reply/delete": {
+      "post": {
+        "tags": [
+          "board"
+        ],
+        "summary": "Delete Reply",
+        "operationId": "board",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "requestBody": {
+          "description": "Post data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/reply_delete"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to delete",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Failed to delete",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_failed"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -791,6 +1115,120 @@
             "items": {
               "$ref": "#/components/schemas/reply"
             }
+          }
+        }
+      },
+      "board_success": {
+        "title": "Board Success",
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "board_failed": {
+        "title": "Board Failed",
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": false
+          }
+        }
+      },
+      "board_add": {
+        "title": "Board add",
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "example": "포스트입니다"
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다"
+          },
+          "category": {
+            "type": "string",
+            "example": "장애인"
+          }
+        }
+      },
+      "board_update": {
+        "title": "Board update",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "포스트입니다"
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다"
+          }
+        }
+      },
+      "board_delete": {
+        "title": "Board delete",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          }
+        }
+      },
+      "reply_add": {
+        "title": "Reply add",
+        "type": "object",
+        "properties": {
+          "m_id": {
+            "type": "integer",
+            "format": "int32",
+            "example": "부모 댓글 id 대댓아니면 0 int형임"
+          },
+          "post_id": {
+            "type": "integer",
+            "format": "int32",
+            "example": "해당 개시글의 id int형임"
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다"
+          }
+        }
+      },
+      "reply_update": {
+        "title": "Reply update",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다"
+          }
+        }
+      },
+      "reply_delete": {
+        "title": "Reply delete",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
           }
         }
       }

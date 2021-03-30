@@ -72,7 +72,7 @@ exports.getPostAPI = async (req, res) => {
 }
 
 exports.updateReplyAPI = (req, res) => {
-    replyDB.updateReply(req.body.id, req.body.content, req.decoded.uid)
+    replyDB.updateReply(req.body, req.decoded.uid)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -86,7 +86,21 @@ exports.updateReplyAPI = (req, res) => {
 }
 
 exports.addReplyAPI = (req, res) => {
-    replyDB.addReply(req.body.content, req.body.post_id, req.decoded.uid, req.body.mid)
+    replyDB.addReply(req.body, req.decoded.uid)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        }).catch((err) => {
+        res.status(404).json({
+            success: false,
+            err
+        })
+    })
+}
+
+exports.deleteReplyAPI = (req, res) => {
+    replyDB.deleteReply(req.body, req.decoded.uid)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -100,7 +114,21 @@ exports.addReplyAPI = (req, res) => {
 }
 
 exports.updatePostAPI = (req, res) => {
-    boardDB.updatePost(req.body.id, req.body.title, req.body.content, req.decoded.uid)
+    boardDB.updatePost(req.body, req.decoded.uid)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        }).catch((err) => {
+        res.status(404).json({
+            success: false,
+            message: err.message
+        })
+    })
+}
+
+exports.addPostAPI = (req, res) => {
+    boardDB.addPost(req.body, req.decoded.uid)
         .then(() => {
             res.status(200).json({
                 success: true
@@ -113,8 +141,8 @@ exports.updatePostAPI = (req, res) => {
     })
 }
 
-exports.addPostAPI = (req, res) => {
-    replyDB.addReply(req.body.content, req.body.post_id, req.decoded.uid, req.body.mid)
+exports.deletePostAPI = (req, res) => {
+    boardDB.deletePost(req.body, req.decoded.uid)
         .then(() => {
             res.status(200).json({
                 success: true
