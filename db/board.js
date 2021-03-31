@@ -172,3 +172,18 @@ exports.deletePost = (data, uid) => {
             .catch(reject);
     })
 }
+
+exports.getMyPost = (uid) => {
+    return new Promise((resolve, reject) => {
+        models.Board.findAll({
+            attributes: ['id', 'title', 'content', 'category', 'like', 'createdAt'],
+            limit: 10,
+            where: {
+                uid: uid
+            },
+            order: [[ 'id', 'DESC' ]]
+        })
+            .then(resolve)
+            .catch(reject)
+    });
+}

@@ -16,8 +16,13 @@ module.exports = (sequelize) => {
                 allowNull: false,
             },
             url: {
-                type: Sequelize.STRING,
+                type: Sequelize.TEXT,
                 allowNull: false,
+            },
+            isSent: {
+                type: Sequelize.BOOLEAN,
+                allowNull: false,
+                defaultValue: false
             }
         },
         {

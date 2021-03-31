@@ -1,26 +1,26 @@
 const boardDB = require('../db/board')
 const replyDB = require('../db/reply')
 
+const getCount = (post) => {
+    return new Promise((resolve) => {
+        replyDB.count(post.dataValues.id)
+            .then(count => {
+                post.dataValues['reply_count'] = count;
+                resolve(post);
+            })
+    })
+}
+
+const getCounts = (posts) => {
+    return new Promise(async (resolve) => {
+        const promises = posts.map((post) => getCount(post));
+        await Promise.all(promises);
+        resolve(posts);
+    })
+}
+
 
 exports.getBoardAPI = (req, res) => {
-    const getCount = (post) => {
-        return new Promise((resolve) => {
-            replyDB.count(post.dataValues.id)
-                .then(count => {
-                    post.dataValues['reply_count'] = count;
-                    resolve(post);
-                })
-        })
-    }
-
-    const getCounts = (posts) => {
-        return new Promise(async (resolve) => {
-            const promises = posts.map((post) => getCount(post));
-            await Promise.all(promises);
-            resolve(posts);
-        })
-    }
-
     const respond = (posts) => {
         res.status(200).json({
             posts: posts
@@ -153,4 +153,16 @@ exports.deletePostAPI = (req, res) => {
             err
         })
     })
+}
+
+exports.getMyPostAPI = (req, res) => {
+    const respond = (posts) => {
+        res.status(200).json({
+            posts: posts
+        })
+    }
+
+    boardDB.getMyPost(req.decoded.uid)
+        .then(getCounts)
+        .then(respond)
 }

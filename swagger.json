@@ -3,7 +3,7 @@
   "info": {
     "title": "Bokjipang API",
     "description": "복지팡을 위한 API 테스트 페이지",
-    "version": "0.0.1"
+    "version": "1.0.0"
   },
   "servers": [
     {
@@ -22,6 +22,10 @@
     {
       "name": "board",
       "description": "Board page"
+    },
+    {
+      "name": "user",
+      "description": "User data"
     }
   ],
   "paths": {
@@ -652,6 +656,127 @@
           }
         }
       }
+    },
+    "/user/update": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update user info",
+        "operationId": "user_update",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "requestBody": {
+          "description": "User data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Update_user_data"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to get data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/interest": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update user interest",
+        "operationId": "user_interest",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "requestBody": {
+          "description": "User interest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/update_interest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to get data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/post": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get user post",
+        "operationId": "user_post",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success to get data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/posts"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1229,6 +1354,25 @@
             "type": "integer",
             "format": "int32",
             "example": 1
+          }
+        }
+      },
+      "Update_user_data": {
+        "title": "Update user data",
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "example": "서울특별시 노원구 월계동 광운로 7길 14-4 B03"
+          }
+        }
+      },
+      "update_interest": {
+        "title": "Update interest",
+        "type": "object",
+        "properties": {
+          "interest": {
+            "$ref": "#/components/schemas/Interest"
           }
         }
       }
