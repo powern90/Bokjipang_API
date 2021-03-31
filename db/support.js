@@ -44,3 +44,16 @@ exports.getNew = () => {
             .catch(reject);
     })
 }
+
+exports.createNew = (data) => {
+    return new Promise((resolve, reject) => {
+        models.Support.create({
+            title: data.title,
+            content: data.content,
+            category: data.category,
+            url: data.url
+        })
+            .then(resolve)
+            .catch(reject);
+    })
+}

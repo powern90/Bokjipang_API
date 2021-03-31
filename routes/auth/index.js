@@ -12,4 +12,7 @@ router.post('/login', userController.loginAPI);
 router.use('/check', authMiddleware);
 router.get('/check', userController.checkAPI);
 
+router.use('/password', authMiddleware);
+router.post('/password', userController.changePWAPI);
+
 module.exports = router;

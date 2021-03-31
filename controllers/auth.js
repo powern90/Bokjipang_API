@@ -126,3 +126,26 @@ exports.checkAPI = (req, res) => {
         info: req.decoded
     })
 }
+
+exports.changePWAPI = (req, res) => {
+    const respond = () => {
+        res.status(200).json({
+            success: true
+        })
+    }
+
+    const onError = (error) => {
+        res.status(403).json({
+            success: false,
+            error
+        })
+    }
+
+    let password = req.body.password;
+    password = crypto.createHmac('sha1', config.secret)
+        .update(password)
+        .digest('base64')
+    authDB.changePassword(password, req.decoded.uid)
+        .then(respond)
+        .catch(onError)
+}

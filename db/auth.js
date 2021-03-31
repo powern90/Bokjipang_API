@@ -43,3 +43,18 @@ exports.checkPassword = (data) => {
             .catch(err => resolve(err));
     });
 }
+
+exports.changePassword = (password, uid) => {
+    return new Promise(resolve => {
+        models.User.update({
+            password: password
+        },{
+            where: {
+                id: uid
+            },
+            returning: true
+        })
+            .then(data => {resolve(data)})
+            .catch(err => resolve(err));
+    });
+}

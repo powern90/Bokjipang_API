@@ -52,3 +52,22 @@ exports.sendNotificationAPI = (res) => {
         .then(respond)
         .catch(onError)
 }
+
+exports.insertNewAPI = (req, res) => {
+    const respond = () => {
+        res.status(200).json({
+            success: true
+        })
+    }
+
+    const onError = (err) => {
+        res.status(403).json({
+            success: false,
+            err: err
+        })
+    }
+
+    supportDB.createNew(req.body)
+        .then(respond)
+        .catch(onError)
+}

@@ -26,6 +26,10 @@
     {
       "name": "user",
       "description": "User data"
+    },
+    {
+      "name": "update",
+      "description": "Support page"
     }
   ],
   "paths": {
@@ -777,8 +781,104 @@
           }
         }
       }
+    },
+    "/auth/password": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Update user password",
+        "operationId": "password_change",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          }
+        ],
+        "requestBody": {
+          "description": "User interest",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/change_password"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to get data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update": {
+      "post": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Insert new Support",
+        "operationId": "insert_support",
+        "requestBody": {
+          "description": "Support data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/support_post"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Success to add data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "update"
+        ],
+        "summary": "Send new Support",
+        "operationId": "insert_support",
+        "responses": {
+          "200": {
+            "description": "Success to send",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/board_success"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
+
   "components": {
     "schemas": {
       "Check_phone": {
@@ -1373,6 +1473,43 @@
         "properties": {
           "interest": {
             "$ref": "#/components/schemas/Interest"
+          }
+        }
+      },
+      "change_password": {
+        "title": "Change Password",
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "example": "asdf"
+          }
+        }
+      },
+      "support_post": {
+        "title": "Support",
+        "type": "object",
+        "properties": {
+          "post": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "example": "포스트입니다"
+              },
+              "content": {
+                "type": "string",
+                "example": "내용입니다"
+              },
+              "category": {
+                "type": "string",
+                "example": "장애인"
+              },
+              "url": {
+                "type": "string",
+                "example": "https://test"
+              }
+            }
           }
         }
       }
