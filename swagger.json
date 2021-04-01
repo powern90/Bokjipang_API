@@ -24,6 +24,10 @@
       "description": "Board page"
     },
     {
+      "name": "support",
+      "description": "Support page"
+    },
+    {
       "name": "user",
       "description": "User data"
     },
@@ -661,6 +665,145 @@
         }
       }
     },
+    "/support": {
+      "get": {
+        "tags": [
+          "support"
+        ],
+        "summary": "Get support list",
+        "operationId": "support_list",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          },
+          {
+            "name": "support",
+            "in": "query",
+            "description": "category",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success to get data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/support_list"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/support/add": {
+      "get": {
+        "tags": [
+          "support"
+        ],
+        "summary": "Get additional support list",
+        "operationId": "support_add",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          },
+          {
+            "name": "support",
+            "in": "query",
+            "description": "category",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          },
+          {
+            "name": "index",
+            "in": "query",
+            "description": "last page",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success to get data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/support_add_list"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/support/post": {
+      "get": {
+        "tags": [
+          "support"
+        ],
+        "summary": "Get post",
+        "operationId": "support_post",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "UID to run task",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwaG9uZSI6IjAxMDEyMzQ1Njc4IiwibmFtZSI6IuyEnOqwleykgCIsImludGVyZXN0Ijp7IuqzoOugueyekCI6dHJ1ZSwi7ZWc67aA66qoIjp0cnVlfSwiaWF0IjoxNjE2NzczNjYxLCJleHAiOjE2MTczNzg0NjEsImlzcyI6ImJsdWVtYW5nby5tZSIsInN1YiI6InVzZXJJbmZvIn0.vQOPlz27fIeXYiuJenFe-nlt7Mh1eDR7Rn1MOlboXmQ"
+          },
+          {
+            "name": "index",
+            "in": "query",
+            "description": "Post number",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success to get data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/support_post"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/update": {
       "post": {
         "tags": [
@@ -878,7 +1021,6 @@
       }
     }
   },
-
   "components": {
     "schemas": {
       "Check_phone": {
@@ -1245,6 +1387,83 @@
           "$ref": "#/components/schemas/post"
         }
       },
+      "support_posts": {
+        "title": "posts",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "제목입니다1"
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다1"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2020-09-16T06:35:10.000Z"
+          }
+        }
+      },
+      "support_add": {
+        "title": "posts",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "제목입니다(추가)"
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다(추가)"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2020-09-16T06:35:10.000Z(추가)"
+          }
+        }
+      },
+      "support_post_item": {
+        "title": "posts",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "example": 1
+          },
+          "title": {
+            "type": "string",
+            "example": "제목입니다"
+          },
+          "content": {
+            "type": "string",
+            "example": "내용입니다"
+          },
+          "url": {
+            "type": "string",
+            "example": "url입니다"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2020-09-16T06:35:10.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "example": "2020-09-16T06:35:10.000Z"
+          }
+        }
+      },
       "reply": {
         "title": "Reply",
         "type": "object",
@@ -1297,6 +1516,27 @@
             "format": "date-time",
             "example": "2021-03-27T07:54:53.000Z"
           }
+        }
+      },
+      "support_list": {
+        "title": "posts",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/support_posts"
+        }
+      },
+      "support_add_list": {
+        "title": "posts",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/support_add"
+        }
+      },
+      "support_post": {
+        "title": "post",
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/support_post_item"
         }
       },
       "inner_post": {
@@ -1483,33 +1723,6 @@
           "password": {
             "type": "string",
             "example": "asdf"
-          }
-        }
-      },
-      "support_post": {
-        "title": "Support",
-        "type": "object",
-        "properties": {
-          "post": {
-            "type": "object",
-            "properties": {
-              "title": {
-                "type": "string",
-                "example": "포스트입니다"
-              },
-              "content": {
-                "type": "string",
-                "example": "내용입니다"
-              },
-              "category": {
-                "type": "string",
-                "example": "장애인"
-              },
-              "url": {
-                "type": "string",
-                "example": "https://test"
-              }
-            }
           }
         }
       }

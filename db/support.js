@@ -1,4 +1,67 @@
 const models = require("../models");
+const {Op} = require("sequelize");
+const category = require("../category");
+
+exports.getList = (support) => {
+    return new Promise(((resolve, reject) => {
+        models.Support.findAll({
+            attributes: ['id', 'title', 'content', 'createdAt'],
+            limit: 10,
+            where: {
+                category: category[support],
+            },
+            order: [['createdAt', 'ASC']]
+        })
+            .then(resolve)
+            .then(reject)
+    }));
+}
+exports.more_getList = (index, support) => {
+    return new Promise(((resolve, reject) => {
+            models.Support.findAll({
+                attributes: ['id', 'title', 'content', 'createdAt'],
+                limit: 10,
+                where: {
+                    category: category[support],
+                    id: {
+                        [Op.gt] : index
+                    }
+                },
+                order: [['createdAt', 'ASC']]
+            })
+                .then(resolve)
+                .then(reject)
+    }));
+}
+    exports.getPost = (id) => {
+    return new Promise(((resolve, reject) => {
+        models.Support.findOne({
+            attributes: ['id', 'title', 'content', 'url', 'createdAt', 'updatedAt'],
+            where: {
+                id: id,
+            },
+        })
+            .then(resolve)
+            .then(reject)
+    }));
+}
+    exports.searchPost = (title, support) => {
+    return new Promise(((resolve, reject) => {
+        models.Support.findAll({
+            attributes: ['id', 'title', 'content', 'url', 'createdAt', 'updatedAt'],
+            where: {
+                title: {
+                    [Op.like]: "%"+title+"%"
+                },
+                category: category[support]
+            },
+            order: [['createdAt','ASC']]
+        })
+            .then(resolve)
+            .then(reject)
+    }));
+}
+
 
 exports.getNew = () => {
     const getNew = () => {
