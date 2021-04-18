@@ -55,7 +55,7 @@ exports.getList = async (board, start, end) => {
     return new Promise((resolve, reject) => {
         models.Board.findAll({
             attributes: ['id', 'title', 'content', 'category', 'like', 'createdAt'],
-            limit: 10,
+            limit: 20,
             where: {
                 category: category[board],
                 cid: {
@@ -177,7 +177,7 @@ exports.getMyPost = (uid) => {
     return new Promise((resolve, reject) => {
         models.Board.findAll({
             attributes: ['id', 'title', 'content', 'category', 'like', 'createdAt'],
-            limit: 10,
+            limit: 20,
             where: {
                 uid: uid
             },
