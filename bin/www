@@ -8,7 +8,7 @@ var https = require('https');
 const option = {
     ca: fs.readFileSync(__dirname + '/cert/fullchain.pem'),
     key: fs.readFileSync(__dirname + '/cert/privkey.pem', 'utf8').toString(),
-    cert: fs.readFileSync(__dirname + '/cert//cert.pem', 'utf8').toString(),
+    cert: fs.readFileSync(__dirname + '/cert/cert.pem', 'utf8').toString(),
 };
 
 // your express configuration here

@@ -6,7 +6,7 @@ exports.getList = (support) => {
     return new Promise(((resolve, reject) => {
         models.Support.findAll({
             attributes: ['id', 'title', 'content', 'createdAt'],
-            limit: 10,
+            limit: 20,
             where: {
                 category: category[support],
             },
@@ -28,7 +28,7 @@ exports.more_getList = (index, support) => {
                 order: [['id', 'DESC']]
             })
                 .then(resolve)
-                .catch(reject)
+                .then(reject)
     }));
 }
     exports.getPost = (id) => {
@@ -40,7 +40,7 @@ exports.more_getList = (index, support) => {
             },
         })
             .then(resolve)
-            .catch(reject)
+            .then(reject)
     }));
 }
     exports.searchPost = (title, support) => {
