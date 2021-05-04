@@ -27,7 +27,7 @@ exports.getBoardAPI = (req, res) => {
         })
     }
 
-    boardDB.getList(req.query.board, (req.query.page-1)*10+1, req.query.page*10)
+    boardDB.getList(req.query.board, (req.query.page-1)*20+1, req.query.page*20)
         .then(getCounts)
         .then(respond)
 }

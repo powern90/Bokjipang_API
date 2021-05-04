@@ -20,17 +20,15 @@ exports.more_getList = (index, support) => {
     return new Promise(((resolve, reject) => {
             models.Support.findAll({
                 attributes: ['id', 'title', 'content', 'createdAt'],
-                limit: 10,
+                offset: parseInt(index),
+                limit: 20,
                 where: {
-                    category: category[support],
-                    id: {
-                        [Op.gt] : index
-                    }
+                    category: category[parseInt(support)]
                 },
-                order: [['createdAt', 'ASC']]
+                order: [['id', 'DESC']]
             })
                 .then(resolve)
-                .then(reject)
+                .catch(reject)
     }));
 }
     exports.getPost = (id) => {
@@ -42,7 +40,7 @@ exports.more_getList = (index, support) => {
             },
         })
             .then(resolve)
-            .then(reject)
+            .catch(reject)
     }));
 }
     exports.searchPost = (title, support) => {
