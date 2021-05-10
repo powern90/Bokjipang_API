@@ -1,5 +1,5 @@
 const boardDB = require('../db/board')
-const userDB = require('../db/user')
+const supportDB = require('../db/support')
 
 
 exports.getBoardAPI = async (req, res) => {
@@ -11,16 +11,6 @@ exports.getBoardAPI = async (req, res) => {
             3: await boardDB.getBoardLatest("고령자"),
             4: await boardDB.getBoardLatest("한부모"),
             5: await boardDB.getBoardLatest("자유")
-        });
-}
-
-exports.getZzimAPI = (req, res) => {
-    userDB.getZzim(req.decoded.phone)
-        .then((data) => {
-            res.status(200).json(
-                {
-                    zzim: data
-                });
         });
 }
 
@@ -45,7 +35,7 @@ exports.getMainAPI = async (req, res) => {
                 4: await boardDB.getBoardLatest("한부모"),
                 5: await boardDB.getBoardLatest("자유")
             },
-            zzim: await userDB.getZzim(req.decoded.phone),
+            zzim: await supportDB.getZzim(req.decoded.phone, true),
             high: await boardDB.getTopHit()
         });
 }

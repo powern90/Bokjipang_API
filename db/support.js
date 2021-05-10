@@ -118,3 +118,74 @@ exports.createNew = (data) => {
             .catch(reject);
     })
 }
+
+exports.getZzim = (uid, limit) => {
+    return new Promise(resolve => {
+        models.Support.findAll({
+            subQuery: false,
+            attributes: ['id', 'title', 'content'],
+            limit: (limit ? 3: 99999),
+            include: [{
+                model: models.User,
+                where: {phone: uid},
+                attributes: []
+            }]
+        })
+            .then(data => resolve(data))
+            .catch(err => resolve(err));
+    });
+}
+
+const getUser = (phone) => {
+    return new Promise((resolve, reject) => {
+        models.User.findOne({
+            where: {
+                phone: phone
+            }
+        })
+            .then(resolve)
+            .catch(reject)
+    })
+}
+
+const getSupport = (id) => {
+    return new Promise((resolve, reject) => {
+        models.Support.findOne({
+            where: {
+                id: id
+            }
+        })
+            .then(resolve)
+            .catch(reject)
+    })
+}
+
+exports.addZzim = (phone, id) => {
+    return new Promise(async resolve => {
+        await Promise.all([getUser(phone), getSupport(id)])
+            .then(datas => {
+                datas[0].addSupport(datas[1])
+                    .then(data => {
+                        if(data === undefined) {
+                            resolve(false);
+                        }
+                        resolve(true);
+                    })
+            })
+    })
+}
+
+exports.removeZzim = (phone, id) => {
+    return new Promise(async resolve => {
+        await Promise.all([getUser(phone), getSupport(id)])
+            .then(datas => {
+                datas[0].removeSupport(datas[1])
+                    .then(data => {
+                        if(data === 0) {
+                            resolve(false);
+                        }
+                        resolve(true);
+                    });
+            })
+    })
+}

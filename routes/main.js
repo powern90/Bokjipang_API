@@ -7,7 +7,7 @@ router.use('/', authMiddleware);
 
 router.get('/', mainController.getMainAPI);
 router.get('/board', mainController.getBoardAPI);
-router.get('/zzim', mainController.getZzimAPI);
+// router.get('/zzim', mainController.getZzimAPI);
 router.get('/high', mainController.getHighAPI);
 
 

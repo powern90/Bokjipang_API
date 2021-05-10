@@ -1,4 +1,5 @@
 const supportDB = require('../db/support')
+const userDB = require('../db/user')
 
 
 exports.getsupportAPI = (req, res) => {
@@ -37,4 +38,34 @@ exports.searchPost = (req, res) => {
     }
     supportDB.searchPost(req.query.title, req.query.support)
         .then(respond)
+}
+
+exports.getZzimAPI = (req, res) => {
+    supportDB.getZzim(req.decoded.phone, false)
+        .then((data) => {
+            res.status(200).json(
+                {
+                    zzim: data
+                });
+        });
+}
+
+exports.addZzimAPI = (req, res) => {
+    supportDB.addZzim(req.decoded.phone, req.query.id)
+        .then((data) => {
+            res.status(200).json(
+                {
+                    success: data
+                });
+        });
+}
+
+exports.removeZzimAPI = (req, res) => {
+    supportDB.removeZzim(req.decoded.phone, req.query.id)
+        .then((data) => {
+            res.status(200).json(
+                {
+                    success: data
+                });
+        });
 }
