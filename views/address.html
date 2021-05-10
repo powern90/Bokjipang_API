@@ -13,7 +13,7 @@
 <script>
 
 
-    window.addEventListener("message", onReceivedPostMessage, false);
+    // window.addEventListener("message", onReceivedPostMessage, false);
 
     function onReceivedPostMessage(event){
         //..ex deconstruct event into action & params
@@ -94,8 +94,6 @@
 
         // iframe을 넣은 element의 위치를 화면의 가운데로 이동시킨다.
         initLayerPosition();
-
-
     }
 
     // 브라우저의 크기 변경에 따라 레이어를 가운데로 이동시키고자 하실때에는
@@ -114,6 +112,7 @@
         element_layer.style.left = (((window.innerWidth || document.documentElement.clientWidth) - width)/2 - borderWidth) + 'px';
         element_layer.style.top = (((window.innerHeight || document.documentElement.clientHeight) - height)/2 - borderWidth) + 'px';
     }
+    window.onload = sample2_execDaumPostcode;
 </script>
 
 </body>
