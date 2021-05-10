@@ -19,7 +19,7 @@ exports.getList = (support) => {
 exports.more_getList = (index, support) => {
     return new Promise(((resolve, reject) => {
             models.Support.findAll({
-                attributes: ['id', 'title', 'content', 'createdAt'],
+                attributes: ['id', 'title', 'content', 'url', 'createdAt', 'updatedAt'],
                 offset: parseInt(index),
                 limit: 20,
                 where: {
