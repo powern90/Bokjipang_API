@@ -6,6 +6,7 @@ const board = require('./board');
 const support = require('./support');
 const update = require('./update');
 const user = require('./user');
+const address = require('./address');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger.json');
 
@@ -15,6 +16,7 @@ router.use('/board', board);
 router.use('/update', update);
 router.use('/support', support);
 router.use('/user', user);
+router.use('/address', address);
 
 
 /* GET home page. */
