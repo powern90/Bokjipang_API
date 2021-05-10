@@ -20,7 +20,6 @@ exports.addList = (req, res) => {
     supportDB.more_getList(req.query.index, req.query.support)
         .then(respond)
 }
-
 exports.getPostAPI = (req, res) => {
     const respond = (post) => {
         res.status(200).json({

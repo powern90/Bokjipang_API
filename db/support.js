@@ -31,7 +31,7 @@ exports.more_getList = (index, support) => {
                 .then(reject)
     }));
 }
-    exports.getPost = (id) => {
+exports.getPost = (id) => {
     return new Promise(((resolve, reject) => {
         models.Support.findOne({
             attributes: ['id', 'title', 'content', 'url', 'createdAt', 'updatedAt'],
