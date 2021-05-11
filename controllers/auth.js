@@ -2,6 +2,7 @@ const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
 const authDB = require('../db/auth')
+const admin = require('firebase-admin')
 
 
 exports.registerAPI = (req, res) => {
@@ -79,26 +80,36 @@ exports.loginAPI = (req, res) => {
             throw new Error('login failed')
         } else {
             return new Promise((resolve, reject) => {
-                jwt.sign(
-                    {
-                        alg: "RS256",
-                        typ: "JWT",
-                        kid: "602a1c7ff680fde71f13738ff5d9f9cf344089cc",
+                admin.auth()
+                    .createCustomToken(String(user.id), {
                         phone: user.phone,
                         name: user.name,
-                        uid: user.id,
-                        interest: JSON.parse(user.interest),
-                        aud: "https://api.bluemango.site"
-                    },
-                    secret,
-                    {
-                        expiresIn: '1h',
-                        issuer: 'fcm-jwt@bokjipang.iam.gserviceaccount.com',
-                        subject: 'fcm-jwt@bokjipang.iam.gserviceaccount.com',
-                    }, (err, token) => {
-                        if (err) reject(err)
-                        resolve(token)
+                        interest: JSON.parse(user.interest)
                     })
+                    .then(resolve)
+                    .catch(reject)
+
+
+                // jwt.sign(
+                //     {
+                //         alg: "RS256",
+                //         typ: "JWT",
+                //         kid: "602a1c7ff680fde71f13738ff5d9f9cf344089cc",
+                //         phone: user.phone,
+                //         name: user.name,
+                //         uid: user.id,
+                //         interest: JSON.parse(user.interest),
+                //         aud: "https://api.bluemango.site"
+                //     },
+                //     secret,
+                //     {
+                //         expiresIn: '1h',
+                //         issuer: 'fcm-jwt@bokjipang.iam.gserviceaccount.com',
+                //         subject: 'fcm-jwt@bokjipang.iam.gserviceaccount.com',
+                //     }, (err, token) => {
+                //         if (err) reject(err)
+                //         resolve(token)
+                //     })
             })
         }
     }

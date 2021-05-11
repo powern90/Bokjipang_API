@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken')
+const admin = require('firebase-admin')
+const firebase = require("firebase");
 
 const authMiddleware = (req, res, next) => {
     const token = req.headers['x-access-token'] || req.query.token
@@ -12,10 +14,20 @@ const authMiddleware = (req, res, next) => {
 
     const p = new Promise(
         (resolve, reject) => {
-            jwt.verify(token, req.app.get('jwt-secret'), (err, decoded) => {
-                if(err) reject(err)
-                resolve(decoded)
-            })
+            firebase.auth()
+                .signInWithCustomToken(token)
+                .then(() => {
+                    firebase.auth().currentUser.getIdToken()
+                        .then(token => {
+                            admin.auth().verifyIdToken(token)
+                                .then(resolve)
+                                .catch(reject)
+                        })
+                })
+            // jwt.verify(token, req.app.get('jwt-secret'), (err, decoded) => {
+            //     if(err) reject(err)
+            //     resolve(decoded)
+            // })
         }
     )
 
