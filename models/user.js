@@ -31,6 +31,11 @@ module.exports = (sequelize) => {
             interest: {
                 type: Sequelize.TEXT,
                 allowNull: false,
+            },
+            fcmID: {
+                type: Sequelize.TEXT,
+                allowNull: false,
+                default: "temp"
             }
         },
         {

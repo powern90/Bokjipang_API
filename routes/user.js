@@ -9,5 +9,6 @@ router.use('/', authMiddleware);
 router.post('/update', userController.updateUserAPI);
 router.post('/interest', userController.updateInterestAPI);
 router.get('/post', boardController.getMyPostAPI);
+router.post('/fcm', userController.fcmAPI);
 
 module.exports = router;

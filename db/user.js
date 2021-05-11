@@ -40,3 +40,17 @@ exports.updateInterest = (data, uid) => {
             .catch(reject)
     })
 }
+
+exports.updateFCMId = (uid, token) => {
+    return new Promise((resolve, reject) => {
+        models.User.update({
+            fcmToken: token
+        },{
+            where: {
+                id: uid
+            }
+        })
+            .then(resolve)
+            .catch(reject)
+    })
+}

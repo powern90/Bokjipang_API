@@ -29,3 +29,17 @@ exports.updateInterestAPI = (req, res) => {
             });
         }));
 }
+
+exports.fcmAPI = (req, res) => {
+    userDB.updateFCMId(req.decoded.uid, req.body.token)
+        .then(() => {
+            res.json({
+                success: true
+            })
+        })
+        .catch(() => {
+            res.json({
+                success: false
+            })
+        })
+}

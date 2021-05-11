@@ -2,7 +2,6 @@ const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
 const authDB = require('../db/auth')
-const admin = require('firebase-admin')
 
 
 exports.registerAPI = (req, res) => {
