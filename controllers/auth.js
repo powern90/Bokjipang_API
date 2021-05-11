@@ -89,7 +89,7 @@ exports.loginAPI = (req, res) => {
                     secret,
                     {
                         expiresIn: '7d',
-                        issuer: 'bluemango.me',
+                        issuer: 'bluemango.site',
                         subject: 'userInfo'
                     }, (err, token) => {
                         if (err) reject(err)
