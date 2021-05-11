@@ -47,17 +47,17 @@ app.set('view engine', 'html');
 
 app.set('jwt-secret', config.secret)
 
-// app.all('*', (req, res, next) => {
-//     let protocol = req.headers['x-forwarded-proto'] || req.protocol;
-//     if (protocol === 'https') {
-//         next();
-//     } else {
-//         let from = `${protocol}://${req.hostname}${req.url}`;
-//         let to = `https://${req.hostname}${req.url}`;
-//         console.log(`[${req.method}]: ${from} -> ${to}`);
-//         res.redirect(307, to);
-//     }
-// });
+app.all('*', (req, res, next) => {
+    let protocol = req.headers['x-forwarded-proto'] || req.protocol;
+    if (protocol === 'https') {
+        next();
+    } else {
+        let from = `${protocol}://${req.hostname}${req.url}`;
+        let to = `https://${req.hostname}${req.url}`;
+        console.log(`[${req.method}]: ${from} -> ${to}`);
+        res.redirect(307, to);
+    }
+});
 
 app.use('/', indexRouter);
 
