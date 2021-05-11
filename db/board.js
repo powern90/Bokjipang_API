@@ -121,7 +121,10 @@ exports.addPost = (data, uid) => {
                 },
                 order: [[ 'cid', 'DESC' ]]
             })
-                .then(data => resolve(data.cid + 1))
+                .then(data => {
+                    if(data === null) resolve(1)
+                    resolve(data.cid + 1)
+                })
                 .catch(reject)
         })
     }
