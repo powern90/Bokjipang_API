@@ -14,20 +14,10 @@ const authMiddleware = (req, res, next) => {
 
     const p = new Promise(
         (resolve, reject) => {
-            firebase.auth()
-                .signInWithCustomToken(token)
-                .then(() => {
-                    firebase.auth().currentUser.getIdToken()
-                        .then(token => {
-                            admin.auth().verifyIdToken(token)
-                                .then(resolve)
-                                .catch(reject)
-                        })
-                })
-            // jwt.verify(token, req.app.get('jwt-secret'), (err, decoded) => {
-            //     if(err) reject(err)
-            //     resolve(decoded)
-            // })
+            jwt.verify(token, req.app.get('jwt-secret'), (err, decoded) => {
+                if(err) reject(err)
+                resolve(decoded)
+            })
         }
     )
 

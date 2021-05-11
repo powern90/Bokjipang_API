@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const admin = require('firebase-admin');
 const serviceAccount = require('./bokjipang-firebase-adminsdk-uhfgo-768bff3684.json');
-const firebase = require("firebase");
 
 
 const indexRouter = require('./routes/index');
@@ -24,17 +23,6 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://bokjipang-default-rtdb.firebaseio.com"
 });
-const firebaseConfig = {
-    apiKey: "AIzaSyB5aMZCl21pEz1UbE83AuxdWVPSFOsRATk",
-    authDomain: "bokjipang.firebaseapp.com",
-    databaseURL: "https://bokjipang-default-rtdb.firebaseio.com",
-    projectId: "bokjipang",
-    storageBucket: "bokjipang.appspot.com",
-    messagingSenderId: "626259617240",
-    appId: "1:626259617240:web:0468535d8f54f723b6fead",
-    measurementId: "G-TEZ18QXQKX"
-};
-firebase.initializeApp(firebaseConfig)
 
 
 app.use(logger('dev'));

@@ -80,36 +80,22 @@ exports.loginAPI = (req, res) => {
             throw new Error('login failed')
         } else {
             return new Promise((resolve, reject) => {
-                admin.auth()
-                    .createCustomToken(String(user.id), {
+                jwt.sign(
+                    {
                         phone: user.phone,
                         name: user.name,
-                        interest: JSON.parse(user.interest)
+                        uid: user.id,
+                        interest: JSON.parse(user.interest),
+                    },
+                    secret,
+                    {
+                        expiresIn: '7d',
+                        issuer: 'bluemango.site',
+                        subject: 'Bokjipang',
+                    }, (err, token) => {
+                        if (err) reject(err)
+                        resolve(token)
                     })
-                    .then(resolve)
-                    .catch(reject)
-
-
-                // jwt.sign(
-                //     {
-                //         alg: "RS256",
-                //         typ: "JWT",
-                //         kid: "602a1c7ff680fde71f13738ff5d9f9cf344089cc",
-                //         phone: user.phone,
-                //         name: user.name,
-                //         uid: user.id,
-                //         interest: JSON.parse(user.interest),
-                //         aud: "https://api.bluemango.site"
-                //     },
-                //     secret,
-                //     {
-                //         expiresIn: '1h',
-                //         issuer: 'fcm-jwt@bokjipang.iam.gserviceaccount.com',
-                //         subject: 'fcm-jwt@bokjipang.iam.gserviceaccount.com',
-                //     }, (err, token) => {
-                //         if (err) reject(err)
-                //         resolve(token)
-                //     })
             })
         }
     }
