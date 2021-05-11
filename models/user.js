@@ -35,7 +35,7 @@ module.exports = (sequelize) => {
             fcmID: {
                 type: Sequelize.TEXT,
                 allowNull: false,
-                default: "temp"
+                defaultValue: "none"
             }
         },
         {
