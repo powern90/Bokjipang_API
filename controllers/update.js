@@ -21,7 +21,7 @@ exports.sendNotificationAPI = (res) => {
                 },
                 topic: String(topic[noti.category]),
                 data : {
-                    id : noti.id,
+                    id : String(noti.id),
                 }
             }
             admin.messaging().send(message)
