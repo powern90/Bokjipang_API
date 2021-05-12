@@ -16,10 +16,13 @@ exports.sendNotificationAPI = (res) => {
         return new Promise((resolve, reject) => {
             const message = {
                 notification: {
-                    title: '새로운 지원사업이 등록되었습니다.',
+                    title: '새로운'+ noti.category + '지원사업이 등록되었습니다.',
                     body: noti.title
                 },
-                topic: String(topic[noti.category])
+                topic: String(topic[noti.category]),
+                data : {
+                    id : noti.id,
+                }
             }
             admin.messaging().send(message)
                 .then(resolve)
@@ -36,13 +39,13 @@ exports.sendNotificationAPI = (res) => {
     }
 
     const respond = (posts) => {
-        res.status(200).json({
+        res.json({
             posts: posts
         })
     }
 
     const onError = (posts) => {
-        res.status(403).json({
+        res.json({
             error: posts
         })
     }
