@@ -38,39 +38,31 @@ exports.sendNotificationAPI = (res) => {
         });
     }
 
-    const respond = (posts) => {
-        res.json({
-            posts: posts
-        })
-    }
-
-    const onError = (posts) => {
-        res.json({
-            error: posts
-        })
-    }
-
     getNew()
         .then(run)
-        .then(respond)
-        .catch(onError)
+        .then(posts => {
+            res.json({
+                posts: posts
+            })
+        })
+        .catch(posts => {
+            res.json({
+                error: posts
+            })
+        })
 }
 
 exports.insertNewAPI = (req, res) => {
-    const respond = () => {
-        res.status(200).json({
-            success: true
-        })
-    }
-
-    const onError = (err) => {
-        res.status(403).json({
-            success: false,
-            err: err
-        })
-    }
-
     supportDB.createNew(req.body)
-        .then(respond)
-        .catch(onError)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        })
+        .catch(() => {
+            res.status(403).json({
+                success: false,
+                err: err
+            })
+        })
 }
