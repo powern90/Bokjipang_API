@@ -2,6 +2,7 @@ const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
 const authDB = require('../db/auth')
+const admin = require('firebase-admin')
 
 
 exports.registerAPI = (req, res) => {
@@ -44,12 +45,22 @@ exports.phone_duplicateAPI = (req, res) => {
 }
 
 exports.enrollAPI = (req, res) => {
-    let {phone, password, name, gender, age, address, interest} = req.body
+    let {phone, password, name, gender, age, address, interest, fcmID} = req.body
+    interest.keys().forEach(subject => {
+        if(interest[subject] === true) {
+            admin.messaging().subscribeToTopic([fcmID], subject)
+                .then(function (response) {
+                    console.log('Successfully subscribed to topic:', response);
+                })
+                .catch(function (error) {
+                    console.log('Error subscribing to topic:', error);
+                });
+        }
+    })
     interest = JSON.stringify(interest);
     password = crypto.createHmac('sha1', config.secret)
         .update(password)
         .digest('base64')
-    console.error(password);
     authDB.enroll({phone, password, name, gender, age, address, interest})
         .then(result => {
             if (result) {
