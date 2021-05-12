@@ -2,7 +2,7 @@ const supportDB = require('../db/support')
 const admin = require('firebase-admin')
 const category = require('../category')
 
-exports.sendNotificationAPI = (res) => {
+exports.sendNotificationAPI = (req, res) => {
     let topic = Object.fromEntries(Object.entries(category).map(entry => entry.reverse()))
     const getNew = () => {
         return new Promise((resolve, reject) => {
@@ -16,7 +16,7 @@ exports.sendNotificationAPI = (res) => {
         return new Promise((resolve, reject) => {
             const message = {
                 notification: {
-                    title: '새로운'+ noti.category + '지원사업이 등록되었습니다.',
+                    title: '새로운 '+ noti.category + ' 지원사업이 등록되었습니다.',
                     body: noti.title
                 },
                 topic: String(topic[noti.category]),
@@ -31,10 +31,11 @@ exports.sendNotificationAPI = (res) => {
     }
 
     const run = (notis) => {
-        return new Promise(async resolve => {
+        return new Promise(async (resolve, reject) => {
             const promises = notis.map(sendMessage);
-            await Promise.all(promises);
-            resolve(notis);
+            await Promise.all(promises)
+                .then(resolve)
+                .catch(reject)
         });
     }
 
