@@ -61,7 +61,7 @@ exports.enrollAPI = (req, res) => {
     password = crypto.createHmac('sha1', config.secret)
         .update(password)
         .digest('base64')
-    authDB.enroll({phone, password, name, gender, age, address, interest})
+    authDB.enroll({phone, password, name, gender, age, address, interest, fcmID})
         .then(result => {
             if (result) {
                 res.status(200).json(
