@@ -1,5 +1,6 @@
 const userDB = require('../db/user')
 const admin = require('firebase-admin')
+const category = require('../category')
 
 exports.updateUserAPI = (req, res) => {
     userDB.updateUser(req.body, req.decoded.uid)
@@ -35,9 +36,10 @@ exports.updateInterestAPI = async (req, res) => {
 
     const Subscript = (token, interest) => {
         return new Promise((resolve, reject) => {
+            let topic = Object.fromEntries(Object.entries(category).map(entry => entry.reverse()))
             Object.keys(interest).forEach(subject => {
                 if(req.body.interest[subject] === false && interest[subject] === true) {
-                    admin.messaging().subscribeToTopic([token], subject)
+                    admin.messaging().subscribeToTopic([token], topic[subject])
                         .then(function(response) {
                             console.log('Successfully subscribed to topic:', response);
                         })
@@ -47,7 +49,7 @@ exports.updateInterestAPI = async (req, res) => {
                         });
                 }
                 else if(req.body.interest[subject] === true && interest[subject] === false) {
-                    admin.messaging().unsubscribeFromTopic([token], subject)
+                    admin.messaging().unsubscribeFromTopic([token], topic[subject])
                         .then(function(response) {
                             console.log('Successfully unsubscribed from topic:', response);
                         })

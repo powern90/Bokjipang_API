@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 const authDB = require('../db/auth')
 const admin = require('firebase-admin')
+const category = require('../category')
 
 
 exports.registerAPI = (req, res) => {
@@ -46,9 +47,10 @@ exports.phone_duplicateAPI = (req, res) => {
 
 exports.enrollAPI = (req, res) => {
     let {phone, password, name, gender, age, address, interest, fcmID} = req.body
+    let topic = Object.fromEntries(Object.entries(category).map(entry => entry.reverse()))
     Object.keys(interest).forEach(subject => {
         if(interest[subject] === true) {
-            admin.messaging().subscribeToTopic([fcmID], subject)
+            admin.messaging().subscribeToTopic([fcmID], topic[subject])
                 .then(function (response) {
                     console.log('Successfully subscribed to topic:', response);
                 })
