@@ -41,10 +41,36 @@ exports.updateInterest = (data, uid) => {
     })
 }
 
+exports.getFCMId = (uid) => {
+    return new Promise(resolve => {
+        models.User.findOne({
+            attributes: ['fcmID'],
+            where: {
+                id: uid
+            }
+        })
+            .then(data => resolve(data))
+            .catch(err => resolve(err));
+    });
+}
+
+exports.getInterest = (uid) => {
+    return new Promise(resolve => {
+        models.User.findOne({
+            attributes: ['interest'],
+            where: {
+                id: uid
+            }
+        })
+            .then(data => resolve(data))
+            .catch(err => resolve(err));
+    });
+}
+
 exports.updateFCMId = (uid, token) => {
     return new Promise((resolve, reject) => {
         models.User.update({
-            fcmToken: token
+            fcmID: token
         },{
             where: {
                 id: uid
