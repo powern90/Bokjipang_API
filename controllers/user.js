@@ -35,7 +35,7 @@ exports.updateInterestAPI = async (req, res) => {
 
     const Subscript = (token, interest) => {
         return new Promise((resolve, reject) => {
-            interest.keys().forEach(subject => {
+            Object.keys(interest).forEach(subject => {
                 if(req.body.interest[subject] === false && interest[subject] === true) {
                     admin.messaging().subscribeToTopic([token], subject)
                         .then(function(response) {

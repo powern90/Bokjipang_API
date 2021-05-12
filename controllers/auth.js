@@ -46,7 +46,7 @@ exports.phone_duplicateAPI = (req, res) => {
 
 exports.enrollAPI = (req, res) => {
     let {phone, password, name, gender, age, address, interest, fcmID} = req.body
-    interest.keys().forEach(subject => {
+    Object.keys(interest).forEach(subject => {
         if(interest[subject] === true) {
             admin.messaging().subscribeToTopic([fcmID], subject)
                 .then(function (response) {
