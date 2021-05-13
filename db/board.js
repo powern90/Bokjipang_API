@@ -63,7 +63,7 @@ exports.getList = async (board, start, end) => {
                     [Op.lte]: end,
                 }
             },
-            order: [[ 'cid', 'ASC' ]]
+            order: [[ 'cid', 'DESC' ]]
         })
             .then(resolve)
             .catch(reject)
