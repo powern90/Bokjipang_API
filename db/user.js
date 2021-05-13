@@ -62,7 +62,7 @@ exports.getInterest = (uid) => {
                 id: uid
             }
         })
-            .then(data => resolve(data))
+            .then(data => resolve(JSON.parse(data.interest)))
             .catch(err => resolve(err));
     });
 }

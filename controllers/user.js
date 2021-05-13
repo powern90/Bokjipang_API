@@ -21,7 +21,7 @@ exports.updateInterestAPI = async (req, res) => {
     const getToken = () => {
         return new Promise((resolve, reject) => {
             userDB.getFCMId(req.decoded.uid)
-                .then(resolve)
+                .then(token => resolve(token.fcmID))
                 .catch(reject)
         })
     }
