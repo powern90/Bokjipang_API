@@ -1,6 +1,5 @@
 const moment = require("moment");
 const models = require("../models");
-const category = require("../category");
 const {Op} = require("sequelize");
 
 const checkUID = (post_id, uid) => {
@@ -52,6 +51,15 @@ exports.getTopHit = () => {
 }
 
 exports.getList = async (board, start, end) => {
+    var category = module.exports = {
+        0: '장애인',
+        1: '저소득',
+        2: '다문화',
+        3: '고령자',
+        4: '한부모',
+        5: '자유'
+    }
+
     return new Promise((resolve, reject) => {
         models.Board.findAll({
             attributes: ['id', 'title', 'content', 'category', 'like', 'createdAt'],

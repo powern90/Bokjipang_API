@@ -128,6 +128,7 @@ exports.updatePostAPI = (req, res) => {
 }
 
 exports.addPostAPI = (req, res) => {
+    console.log(req.body)
     boardDB.addPost(req.body, req.decoded.uid)
         .then(() => {
             res.status(200).json({
