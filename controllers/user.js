@@ -38,7 +38,7 @@ exports.updateInterestAPI = async (req, res) => {
         return new Promise((resolve, reject) => {
             let topic = Object.fromEntries(Object.entries(category).map(entry => entry.reverse()))
             Object.keys(interest).forEach(subject => {
-                if(req.body.interest[subject] === false && interest[subject] === true) {
+                if(req.body.interest[subject] === true && interest[subject] === false) {
                     admin.messaging().subscribeToTopic([token], topic[subject])
                         .then(function(response) {
                             console.log('Successfully subscribed to topic:', response);
@@ -48,7 +48,7 @@ exports.updateInterestAPI = async (req, res) => {
                             reject(error);
                         });
                 }
-                else if(req.body.interest[subject] === true && interest[subject] === false) {
+                else if(req.body.interest[subject] === false && interest[subject] === true) {
                     admin.messaging().unsubscribeFromTopic([token], topic[subject])
                         .then(function(response) {
                             console.log('Successfully unsubscribed from topic:', response);
