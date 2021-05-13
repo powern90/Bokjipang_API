@@ -51,7 +51,7 @@ exports.getPostAPI = async (req, res) => {
     const getDoubleReply = (replies) => {
         const db_search = (reply) => {
             return new Promise(resolve => {
-                replyDB.getReply(reply.id, true)
+                replyDB.getReply(reply, true)
                     .then(double_replies => {
                         reply.dataValues['double_reply'] = double_replies;
                         resolve(double_replies);

@@ -43,14 +43,25 @@ exports.count = (post_id) => {
 
 exports.getReply = (reply_id, double) => {
     return new Promise(resolve => {
-        models.Reply.findAll({
-            attributes: ['id', 'content', 'uid', 'createdAt'],
+        models.Reply.findAll(double ?
+            {
+                attributes: ['id', 'content', 'uid', 'createdAt'],
+                where: {
+                    post_id: reply_id.post_id,
+                    m_id: reply_id.id,
+                    id: {[Op.ne]: sequelize.col('m_id')}
+                },
+                order: [[ 'createdAt', 'ASC' ]]
+            } :
+            {
+            attributes: ['id', 'content', 'uid', 'post_id', 'createdAt'],
             where: {
                 post_id: reply_id,
-                id: double ? {[Op.ne]: sequelize.col('m_id')} : {[Op.eq]: sequelize.col('m_id')}
+                id: {[Op.eq]: sequelize.col('m_id')}
             },
             order: [[ 'createdAt', 'ASC' ]]
-        }).then(async double_replies => {
+            }
+        ).then(async double_replies => {
             const promises = double_replies.map(getName);
             await Promise.all(promises);
             resolve(double_replies);

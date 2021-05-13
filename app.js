@@ -2,8 +2,8 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-const admin = require('firebase-admin')
-const serviceAccount = require('./bokjipang-firebase-adminsdk-uhfgo-768bff3684.json')
+const admin = require('firebase-admin');
+const serviceAccount = require('./bokjipang-firebase-adminsdk-uhfgo-768bff3684.json');
 
 
 const indexRouter = require('./routes/index');
@@ -23,6 +23,7 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://bokjipang-default-rtdb.firebaseio.com"
 });
+
 
 app.use(logger('dev'));
 app.use(express.json());

@@ -1,4 +1,6 @@
 const jwt = require('jsonwebtoken')
+const admin = require('firebase-admin')
+const firebase = require("firebase");
 
 const authMiddleware = (req, res, next) => {
     const token = req.headers['x-access-token'] || req.query.token

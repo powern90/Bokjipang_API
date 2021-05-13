@@ -2,6 +2,8 @@ const crypto = require('crypto')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
 const authDB = require('../db/auth')
+const admin = require('firebase-admin')
+const category = require('../category')
 
 
 exports.registerAPI = (req, res) => {
@@ -44,13 +46,24 @@ exports.phone_duplicateAPI = (req, res) => {
 }
 
 exports.enrollAPI = (req, res) => {
-    let {phone, password, name, gender, age, address, interest} = req.body
+    let {phone, password, name, gender, age, address, interest, fcmID} = req.body
+    let topic = Object.fromEntries(Object.entries(category).map(entry => entry.reverse()))
+    Object.keys(interest).forEach(subject => {
+        if(interest[subject] === true) {
+            admin.messaging().subscribeToTopic([fcmID], topic[subject])
+                .then(function (response) {
+                    console.log('Successfully subscribed to topic:', response);
+                })
+                .catch(function (error) {
+                    console.log('Error subscribing to topic:', error);
+                });
+        }
+    })
     interest = JSON.stringify(interest);
     password = crypto.createHmac('sha1', config.secret)
         .update(password)
         .digest('base64')
-    console.error(password);
-    authDB.enroll({phone, password, name, gender, age, address, interest})
+    authDB.enroll({phone, password, name, gender, age, address, interest, fcmID})
         .then(result => {
             if (result) {
                 res.status(200).json(
@@ -84,13 +97,13 @@ exports.loginAPI = (req, res) => {
                         phone: user.phone,
                         name: user.name,
                         uid: user.id,
-                        interest: JSON.parse(user.interest)
+                        interest: JSON.parse(user.interest),
                     },
                     secret,
                     {
                         expiresIn: '7d',
-                        issuer: 'bluemango.me',
-                        subject: 'userInfo'
+                        issuer: 'bluemango.site',
+                        subject: 'Bokjipang',
                     }, (err, token) => {
                         if (err) reject(err)
                         resolve(token)
