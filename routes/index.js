@@ -20,7 +20,7 @@ router.use('/address', address);
 
 
 /* GET home page. */
-// router.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+router.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 module.exports = router;
