@@ -27,18 +27,18 @@ exports.sendNotificationAPI = (req, res) => {
             sec = sec >= 10 ? sec : '0' + sec
             let purchaseDay = year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec
             const message = {
-                notification: {
-                    title: '새로운 '+ noti.category + ' 지원사업이 등록되었습니다.',
-                    body: noti.title
-                },
                 topic: String(topic[noti.category]),
                 data : {
+                    title: '새로운 '+ noti.category + ' 지원사업이 등록되었습니다.',
+                    body: noti.title,
                     id : String(noti.id),
                     createdAt: purchaseDay
                 }
             }
             admin.messaging().send(message)
-                .then(resolve)
+                .then(data => {
+                    resolve(data);
+                })
                 .catch(reject);
         });
     }
