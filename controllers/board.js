@@ -21,6 +21,18 @@ const getCounts = (posts) => {
 
 
 exports.getBoardAPI = (req, res) => {
+    const getLike = (post) => {
+        return new Promise((resolve) => {
+            boardDB.getMyLike(req.decoded.phone, req.query.board, (req.query.page-1)*20+1, req.query.page*20)
+                .then(likePosts => {
+                    post.forEach(async post => {
+                        await likePosts.includes(post.id) ? post.dataValues['my_like'] = 1: post.dataValues['my_like'] = 0
+                    })
+                    resolve(post);
+                })
+        })
+    }
+
     const respond = (posts) => {
         res.status(200).json({
             posts: posts
@@ -29,14 +41,18 @@ exports.getBoardAPI = (req, res) => {
 
     boardDB.getList(req.query.board, (req.query.page-1)*20+1, req.query.page*20)
         .then(getCounts)
+        .then(getLike)
         .then(respond)
 }
 
 exports.getPostAPI = async (req, res) => {
     const getPost = (post_id) => {
-        return new Promise(resolve => {
-            boardDB.getPost(post_id)
-                .then(post => resolve(post));
+        return new Promise(async resolve => {
+            await Promise.all([boardDB.getPost(post_id), boardDB.isLike(req.decoded.phone, post_id)])
+                .then(datas => {
+                    datas[1] ? datas[0].dataValues['my_like'] = 1: datas[0].dataValues['my_like'] = 0
+                    resolve(datas[0])
+                });
         })
     }
 
@@ -166,4 +182,32 @@ exports.getMyPostAPI = (req, res) => {
     boardDB.getMyPost(req.decoded.uid)
         .then(getCounts)
         .then(respond)
+}
+
+exports.addLikeAPI = (req, res) => {
+    boardDB.addLike(req.decoded.phone, req.query.id)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        }).catch((err) => {
+        res.status(404).json({
+            success: false,
+            err
+        })
+    })
+}
+
+exports.deleteLikeAPI = (req, res) => {
+    boardDB.removeLike(req.decoded.phone, req.query.id)
+        .then(() => {
+            res.status(200).json({
+                success: true
+            })
+        }).catch((err) => {
+        res.status(404).json({
+            success: false,
+            err
+        })
+    })
 }

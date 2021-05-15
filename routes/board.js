@@ -13,5 +13,7 @@ router.post('/reply/delete', boardController.deleteReplyAPI);
 router.post('/post/update', boardController.updatePostAPI);
 router.post('/post/add', boardController.addPostAPI);
 router.post('/post/delete', boardController.deletePostAPI);
+router.get('/post/like/add', boardController.addLikeAPI);
+router.get('/post/like/delete', boardController.deleteLikeAPI);
 
 module.exports = router;

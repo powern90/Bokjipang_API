@@ -4,6 +4,7 @@
     "password": "1234!",
     "database": "api",
     "host": "192.168.1.10",
-    "dialect": "mariadb"
+    "dialect": "mariadb",
+    "logging": false
   }
 }

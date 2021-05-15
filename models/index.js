@@ -17,7 +17,7 @@ db.Support = require('./support')(sequelize, Sequelize);
 
 // user와 board 1:N
 db.User.hasMany(db.Reply, {foreignKey:'uid', sourceKey:'id'});
-db.Board.belongsTo(db.User,{foreignKey:'uid',targetKey:'id'});
+db.Board.belongsTo(db.User,{as: "writer", foreignKey:'uid',targetKey:'id'});
 
 // user와 comment 1:N
 db.User.hasMany(db.Reply, {foreignKey:'uid', sourceKey:'id'});
@@ -30,5 +30,9 @@ db.Support.belongsToMany(db.User,{through: 'zzim'});
 // board와 comment 1:N
 db.Board.hasMany(db.Reply, {foreignKey:'post_id', sourceKey:'id'});
 db.Reply.belongsTo(db.User,{foreignKey:'post_id',targetKey:'id'});
+
+// user와 board M:N
+db.User.belongsToMany(db.Board, {through: 'like', foreignKey: 'phone', sourceKey: 'phone'});
+db.Board.belongsToMany(db.User,{through: 'like'});
 
 module.exports = db;

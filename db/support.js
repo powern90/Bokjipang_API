@@ -136,7 +136,7 @@ exports.getZzim = (uid, limit) => {
     });
 }
 
-const getUser = (phone) => {
+exports.getUser = (phone) => {
     return new Promise((resolve, reject) => {
         models.User.findOne({
             where: {

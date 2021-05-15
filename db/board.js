@@ -1,6 +1,16 @@
 const moment = require("moment");
 const models = require("../models");
 const {Op} = require("sequelize");
+const supportDB = require("./support")
+
+const category = {
+    0: '장애인',
+    1: '저소득',
+    2: '다문화',
+    3: '고령자',
+    4: '한부모',
+    5: '자유'
+}
 
 const checkUID = (post_id, uid) => {
     return new Promise((resolve, reject) => {
@@ -51,15 +61,6 @@ exports.getTopHit = () => {
 }
 
 exports.getList = async (board, start, end) => {
-    var category = module.exports = {
-        0: '장애인',
-        1: '저소득',
-        2: '다문화',
-        3: '고령자',
-        4: '한부모',
-        5: '자유'
-    }
-
     return new Promise((resolve, reject) => {
         models.Board.findAll({
             attributes: ['id', 'title', 'content', 'category', 'like', 'createdAt'],
@@ -198,3 +199,103 @@ exports.getMyPost = (uid) => {
             .catch(reject)
     });
 }
+
+exports.getMyLike = async (phone, board, start, end) => {
+    return new Promise((resolve, reject) => {
+        models.Board.findAll({
+            subQuery: false,
+            attributes: ['id'],
+            where: {
+                category: category[board],
+                cid: {
+                    [Op.gte]: start,
+                    [Op.lte]: end,
+                }
+            },
+            include: [{
+                model: models.User,
+                attributes: [],
+                where: {
+                    phone: phone
+                }
+            }]
+        })
+            .then(data => {
+                resolve(data.map(post => post.id));
+            })
+            .catch(err => {
+                reject(err);
+            });
+    });
+}
+
+exports.addLike = (phone, id) => {
+    return new Promise(async (resolve, reject) => {
+        await Promise.all([supportDB.getUser(phone), this.getPost(id)])
+            .then(datas => {
+                datas[0].addBoard(datas[1])
+                    .then(data => {
+                        if(data === 0) {
+                            reject(false);
+                        }
+                        models.Board.increment('like', {
+                            by: 1,
+                            where: {
+                                id: id
+                            }
+                        })
+                            .then(() => resolve(true))
+                            .catch(() => reject(false))
+                    })
+                    .catch(reject)
+            })
+    })
+}
+
+exports.removeLike = (phone, id) => {
+    return new Promise(async (resolve, reject) => {
+        await Promise.all([supportDB.getUser(phone), this.getPost(id)])
+            .then(datas => {
+                datas[0].removeBoard(datas[1])
+                    .then(data => {
+                        if(data === 0) {
+                            reject(false);
+                        }
+                        models.Board.decrement('like', {
+                            by: 1,
+                            where: {
+                                id: id
+                            }
+                        })
+                            .then(() => resolve(true))
+                            .catch(() => reject(false))
+                    })
+                    .catch(reject)
+            })
+    })
+}
+
+exports.isLike = async (phone, id) => {
+    return new Promise((resolve, reject) => {
+        models.Board.count({
+            subQuery: false,
+            where: {
+                id: id
+            },
+            include: [{
+                model: models.User,
+                attributes: [],
+                where: {
+                    phone: phone
+                }
+            }]
+        })
+            .then(count => {
+                resolve(count !== 0);
+            })
+            .catch(err => {
+                reject(err);
+            });
+    });
+}
+
