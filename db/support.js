@@ -162,7 +162,7 @@ const getSupport = (id) => {
 
 exports.addZzim = (phone, id) => {
     return new Promise(async resolve => {
-        await Promise.all([getUser(phone), getSupport(id)])
+        await Promise.all([this.getUser(phone), getSupport(id)])
             .then(datas => {
                 datas[0].addSupport(datas[1])
                     .then(data => {
@@ -177,7 +177,7 @@ exports.addZzim = (phone, id) => {
 
 exports.removeZzim = (phone, id) => {
     return new Promise(async resolve => {
-        await Promise.all([getUser(phone), getSupport(id)])
+        await Promise.all([this.getUser(phone), getSupport(id)])
             .then(datas => {
                 datas[0].removeSupport(datas[1])
                     .then(data => {
